@@ -36,10 +36,13 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$notify = Notification;
 
 // 导入iview插件
-import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+// 按需引入
+import { BackTop, Affix } from 'iview';
+// 注册
+Vue.component('BackTop', BackTop);
+Vue.component('Affix', Affix);
 
-Vue.use(iView);
 
 // 导入放大镜組建
 import ProductZoomer from 'vue-product-zoomer'
