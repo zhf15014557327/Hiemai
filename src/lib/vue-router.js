@@ -18,11 +18,21 @@ import shoppingOrderDrtails from "../components/shopping-OrderDrtails.vue"
 import goodsDetails from "../components/goods-details.vue"
 // 导入会员中心页
 import vipCenter from "../components/vipCenter.vue"
+// 中心首页
+import vipCertenIndex from "../components/vipcenter-children/vipCerten-index.vue"
+// 订单列表
+import vipOrderList from "../components/vipcenter-children/vip-orderList.vue"
+// 订单详情
+import vipOrderDetails from "../components/vipcenter-children/vip-orderDetails.vue"
 // 初始化路由
 let router = new VueRouter({
+     // 滚动行为
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
   // 规则
   routes:[
-    {
+    {  
       path:'/',
       // 路由重定向
       redirect:'index',
@@ -46,6 +56,11 @@ let router = new VueRouter({
     {
       path:'/pay',
       component:pay,
+      meta:{
+        // 判断是否检查登录状态
+      checkLogin:true
+    }
+
     },
     // 购物车
     {
@@ -77,17 +92,42 @@ let router = new VueRouter({
       // 携带参数跳转
       component:vipCenter,
       // 嵌套路由
-      // children: [
-      //   {
-      //     // 当 /user/:id/profile 匹配成功，
-      //     // UserProfile 会被渲染在 User 的 <router-view> 中
-      //     path: 'profile',
-      //     component: UserProfile
-      //   },
-      // ]
+      children: [
+        {
+            //重定向
+            path:'',
+            redirect:'vipCertenIndex',
+          
+        },
+        {
+            // 首页
+            path:'vipCertenIndex',
+            component:vipCertenIndex,
+            meta:{
+              dftitle:"中心首页"
+            }
+        },
+        {
+            // 订单列表
+            path:'vipOrderList',
+            component:vipOrderList,
+            meta:{
+              dftitle:"订单列表"
+            }
+            
+        },
+        {
+            //订单详情
+            path:'vipOrderDetails/:orderId',
+            component:vipOrderDetails,
+            meta:{
+              dftitle:"订单详情"
+            }
+        },
+      ]
     },
-   
-  ]
+  ],
+ 
 });
 // 导航守卫
 router.beforeEach((to, from, next) => {
@@ -101,12 +141,14 @@ router.beforeEach((to, from, next) => {
     Vue.prototype.$axios.get('site/account/islogin').then(res=>{
             // console.log( res );
         if(res.data.code === "logined"){
+        
             next()
           }else{  
             Vue.prototype.$message({
               message: '别急先登录吧!',
               type: "warning"
            })  
+        
           //打回登录页
           next('/login');
           }
@@ -115,5 +157,10 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+// 路由转完毕触发
+// 页面滚动事件   太lol 使用vue滚动行为代替
+// router.afterEach((to, from) => {
+//   window.scrollTo(0,9999)
+// })
 // 暴露出去
 export default router

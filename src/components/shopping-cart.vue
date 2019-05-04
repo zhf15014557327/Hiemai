@@ -78,7 +78,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr v-show="goodsList.length!=0" v-for="(item, index) in goodsList" :key="item.id">
+                <tr v-show="goodsList.length!=0" v-for="(item) in goodsList" :key="item.id">
                   <td width="80" align="center">
                     <!-- 开关 -->
                     <el-switch
@@ -124,7 +124,7 @@
             <div class="right-box">
               <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
               <!-- 携带ids跳转 -->
-              <router-link :to="'/shoppingDownOrder/'+checkedId"><button class="submit" >立即结算</button></router-link>
+              <button class="submit" @click="getdowOrder" >立即结算</button>
              
             </div>
           </div>
@@ -191,7 +191,14 @@ export default {
             message: "已取消删除"
           });
         });
-    }
+    },
+      getdowOrder(){
+         if(this.checkedId == 0){
+             this.$message("哥们还没有商品!!");
+              return;  
+         } 
+         this.$router.push('/shoppingDownOrder/'+this.checkedId)
+      }
     },
     // 生命周期函数
     async created() {
@@ -217,7 +224,7 @@ export default {
 //   侦听器
     watch: {
         goodsList: {
-                handler: function (val, oldVal) { 
+                handler: function (val,) { 
                     let obj={};
                     val.forEach(v=>{
                         obj[v.id]=v.buycount;

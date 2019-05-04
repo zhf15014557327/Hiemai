@@ -25,8 +25,10 @@
                       <div class="info">
                         <strong>订单已支付成功！</strong>
                         <p>
+                          <span class="jishi">{{this.num}}s后</span>进入购物车
                           您可以点击这里进入
-                          <a href="/user/center/index.html">会员中心</a>查看订单状态！
+                          <router-link to="/vipCenter" class="vip">会员中心</router-link>
+                         查看订单状态！
                         </p>
                         <p>如有其它问题，请立即与我们客服人员联系。</p>
                       </div>
@@ -42,8 +44,39 @@
   </div>
 </template><script>
 export default {
-  name: "pay"
+  name: "pay",
+  data(){
+      return{
+        // 倒计时
+        num:10,
+        // 定时器id
+      intim:0
+      }
+  },
+  created() {
+    this.intim = setInterval(() => {
+        this.num--;
+        if(this.num === 0){
+          // 时间等于0时跳转
+          this.$router.push('/index')
+        }
+      }, 1000);
+  },
+     // 准备销毁
+    destroyed(){
+        // 清除定时器
+        clearInterval(this.intim);
+    }
 };
 </script>
-<style lang="">
+<style lang="scss">
+.conten-pay{
+  .jishi{
+    font-size: 28px;
+    color: red;
+  }
+  .vip{
+    background-color: green;
+  }
+}
 </style>

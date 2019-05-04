@@ -14,10 +14,10 @@
           <div class="wrap-box">
             <div class="left-925">
               <div class="goods-box clearfix">
-                <div class="pic-box">
+                <div class="pic-box"    >
                   <!-- 放大镜 -->
                   <ProductZoomer
-                    v-if="images.normal_size.length!=0"
+                    v-if="images.normal_size.length!=0 "
                     :base-images="images"
                     :base-zoomer-options="zoomerOptions"
                   />
@@ -66,8 +66,8 @@
                     <dl>
                       <dd>
                         <div id="buyButton" class="btn-buy">
-                            
-                          <button  class="buy">立即购买</button>
+                            <router-link class="buy" to="/shoppingCart">立即购买</router-link>
+                          <!-- <button  class="buy"></button> -->
                           <button @click="add2cart" class="add">加入购物车</button>
                         </div>
                       </dd>
@@ -143,7 +143,13 @@
                       style="margin: 5px 0px 15px 69px; line-height: 42px; text-align: center; border: 1px solid rgb(247, 247, 247);"
                     >暂无评论，快来抢沙发吧！</p>
                     <ul id="commentList" class="list-box" v-show="totalcount!=0">
-                      <li v-for="(item, index) in contenInof" :key="item.article_id">
+                      <li v-for="(item, index) in contenInof" :key="index">
+
+                        <!-- 使用item.article_id 是报错 是说key的值重复了 在这里使用index代替解决了报错问题 -->
+                        <!-- vue.runtime.esm.js?6e6d:619 [Vue warn]: 
+                        Duplicate keys detected: 
+                        '88'. This may cause an update error. -->
+
                         <div class="avatar-box">
                           <i class="iconfont icon-user-full"></i>
                         </div>
@@ -177,7 +183,7 @@
                 <div class="sidebar-box">
                   <h4>推荐商品</h4>
                   <ul class="side-img-list">
-                    <li v-for="(item, index) in hotgoodslist" :key="item.id">
+                    <li v-for="(item, index) in hotgoodslist" :key="index">
                       <div class="img-box">
                         <router-link :to="'/goodsDetails/'+item.id">
                           <img :src="item.img_url">
@@ -377,6 +383,7 @@ export default {
     transform: rotateZ(-45deg);
     display: block;
   }
+  // 放大镜样式
   .inline-zoomer-zoomer-box {
       padding-right: 10px;
     width: 395px;

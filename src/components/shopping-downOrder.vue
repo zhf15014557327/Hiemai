@@ -131,7 +131,7 @@
                       <th width="84" align="center">购买数量</th>
                       <th width="104" align="center">金额(元)</th>
                     </tr>
-                    <tr v-for="(item, index) in goodsinof" :key="item.id">
+                    <tr v-for="(item) in goodsinof" :key="item.id">
                       <td width="100" align="center">
                         <router-link :to="'/goodsDetails/'+item.id">
                           <img :src="item.img_url" class="img">
@@ -353,8 +353,13 @@ export default {
                           this.$notify({
                       title: '成功',
                       message: '订单提交成功',
-                      type: 'success'
+                      type: 'success',
+                      duration:2000
                     });
+                    // 订单提交成功,删除vuex保存的商品信息
+                  this.goodsinof.forEach(v=>{
+                           this.$store.commit('dlegoods',v.id)
+                  })
                     // console.log( res.data.message.orderid );
                     // 跳转支付
                       this.$router.push("/shoppingOrderDrtails/"+ res.data.message.orderid);
@@ -362,7 +367,8 @@ export default {
                           this.$notify({
                       title: '失败',
                       message: '订单提交失败',
-                      type: 'warning'
+                      type: 'warning',
+                      duration:2000
                     });
                     }
                   })

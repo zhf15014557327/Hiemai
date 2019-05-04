@@ -1,6 +1,6 @@
 <template>
-    <div class="conten-certen">
-        <div class="bg-wrap" style="min-height: 765px;">
+    <div class="conten-index">
+    <div class="bg-wrap" style="min-height: 765px;">
                                 <div class="sub-tit">
                                     <ul>
                                         <li class="selected">
@@ -35,14 +35,18 @@
                                         <li>待完成订单：2个</li>
                                     </ul>
                                 </div>
-                            </div>
-    </div>
+                            </div></div>
 </template>
 <script>
 export default {
-        name:"vipCerten"
+        name:"vipindex"
 }
 </script>
-<style lang="">
-    
+<style lang="scss">
+    .conten-index{
+       
+        .sub-tit {
+            height: 80px;
+        }
+    }
 </style>

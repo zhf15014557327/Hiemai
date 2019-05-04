@@ -58,9 +58,12 @@
                             </a>
                         </li>
                         <li class="down">
-                            <a href="#" class="">
-                                <span class="out" style="top: 0px;">会员权益</span>
-                            </a>
+                            <!-- <a href="#" class=""> -->
+                                <router-link to="/vipCenter">
+                                 <span class="out" style="top: 0px;">会员权益</span>
+                                </router-link>
+                               
+                            <!-- </a> -->
                         </li>
                         <li class="goods">
                             <a href="" class="router-link-exact-active ">
