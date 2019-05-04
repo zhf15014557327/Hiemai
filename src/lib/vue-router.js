@@ -157,10 +157,6 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-// 路由转完毕触发
-// 页面滚动事件   太lol 使用vue滚动行为代替
-// router.afterEach((to, from) => {
-//   window.scrollTo(0,9999)
-// })
+
 // 暴露出去
 export default router

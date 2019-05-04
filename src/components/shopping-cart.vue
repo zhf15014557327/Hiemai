@@ -100,13 +100,8 @@
                   </td>
                 </tr>
                 <tr>
-                  <th  align="center" >
-                    
-                     <el-switch
-                      v-model="CheckAll"
-                      active-color="#13ce66"
-                      inactive-color="#ff4949"
-                    ></el-switch>
+                  <th align="center">
+                    <el-switch v-model="CheckAll" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </th>
                   <th align="right" colspan="8">
                     已选择商品
@@ -122,10 +117,11 @@
           <!--购物车底部-->
           <div class="cart-foot clearfix">
             <div class="right-box">
-              <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
+              <router-link to="/index">
+                <button class="button">继续购物</button>
+              </router-link>
               <!-- 携带ids跳转 -->
-              <button class="submit" @click="getdowOrder" >立即结算</button>
-             
+              <button class="submit" @click="getdowOrder">立即结算</button>
             </div>
           </div>
           <!--购物车底部-->
@@ -140,46 +136,21 @@ export default {
   data() {
     return {
       // 购物车商品详细信息
-      goodsList: [],
-   
-        };
-    },
-
-    // 使用导航守卫代替
-    // beforeCreate() {
-    //     // 判断是否登录没登录打回登录页
-    //     this.$axios.get("site/account/islogin").then(res=>{
-    //             // console.log(res  );
-    //             if(res.data.code=="nologin"){
-    //                     this.$message({
-    //                     message: "请先登录",
-    //                     type: "warning"
-    //         });
-    //         // 打回登录页
-    //         this.$router.push('/login');
-    //             }
-    //     })
-    // },
-    //   方法
-    methods: {
-        // 删除商品  
-        dlt(index){
-           this.$confirm("此操作将删除该商品, 是否删除?", "温馨提示", {
+      goodsList: []
+    };
+  },
+  //   方法
+  methods: {
+    // 删除商品
+    dlt(index) {
+      this.$confirm("此操作将删除该商品, 是否删除?", "温馨提示", {
         confirmButtonText: "狠心删除",
         cancelButtonText: "继续保留",
         type: "warning"
       })
         .then(() => {
-            // 直接传个下标过来,删除数组元素废弃下一个做法
-             this.goodsList.splice(index, 1);
-          // 删除数据
-          // 删除当前这个组件中的数据
-        //   this.goodsList.forEach((v, index) => {
-        //     //   找到这个id的下标删除一个
-        //     if (v.id == id) {
-        //       this.goodsList.splice(index, 1);
-        //     }
-        //   });
+          // 直接传个下标过来,删除数组元素废弃下一个做法
+          this.goodsList.splice(index, 1);
           this.$message({
             type: "success",
             message: "删除成功!"
@@ -192,16 +163,16 @@ export default {
           });
         });
     },
-      getdowOrder(){
-         if(this.checkedId == 0){
-             this.$message("哥们还没有商品!!");
-              return;  
-         } 
-         this.$router.push('/shoppingDownOrder/'+this.checkedId)
+    getdowOrder() {
+      if (this.checkedId == 0) {
+        this.$message("哥们还没有商品!!");
+        return;
       }
-    },
-    // 生命周期函数
-    async created() {
+      this.$router.push("/shoppingDownOrder/" + this.checkedId);
+    }
+  },
+  // 生命周期函数
+  async created() {
     // 获取id字符串
     let ids = "";
     for (const key in this.$store.state.cartData) {
@@ -221,73 +192,72 @@ export default {
     });
     this.goodsList = res.data.message;
   },
-//   侦听器
-    watch: {
-        goodsList: {
-                handler: function (val,) { 
-                    let obj={};
-                    val.forEach(v=>{
-                        obj[v.id]=v.buycount;
-                    })
-                    this.$store.commit('update',obj)
-                },
-                deep: true
-        },
-    },
-//   计算属性
+  //   侦听器
+  watch: {
+    goodsList: {
+      handler: function(val) {
+        let obj = {};
+        val.forEach(v => {
+          obj[v.id] = v.buycount;
+        });
+        this.$store.commit("update", obj);
+      },
+      deep: true
+    }
+  },
+  //   计算属性
   computed: {
     //   总金额
-      totalprc(){
-          let prc=0;
-        this.goodsList.forEach(v=>{
-            if(v.isStatus){
-              prc += v.buycount*v.sell_price
-            }
-        })
-          return prc
-      },
-  
+    totalprc() {
+      let prc = 0;
+      this.goodsList.forEach(v => {
+        if (v.isStatus) {
+          prc += v.buycount * v.sell_price;
+        }
+      });
+      return prc;
+    },
+
     //   选中商品
-    totalName(){
-        let num = 0;
-        this.goodsList.forEach(v=>{
-            if(v.isStatus){
-               num+=v.buycount
-            }
-        })
-         return num;
+    totalName() {
+      let num = 0;
+      this.goodsList.forEach(v => {
+        if (v.isStatus) {
+          num += v.buycount;
+        }
+      });
+      return num;
     },
     // 开关的全选和反选
-      CheckAll:{
-        //   反选
-        get() {
+    CheckAll: {
+      //   反选
+      get() {
         // 返回是否都被选中
         return this.goodsList.every(v => {
           return v.isStatus == true;
         });
       },
-        //   全选
-      set(value){
-              this.goodsList.forEach(v=>{
-                 v.isStatus=value
-              })
-          }
-
-      },
-      // 选中商品的id
-      checkedId(){
-        let ids = '';
-        this.goodsList.forEach(v=>{
-            if(v.isStatus){
-                ids+=v.id;
-                ids+=',';
-            }
-        })
-        ids= ids.slice(0,-1);
-        // console.log( ids );
-        return ids;
+      //   全选
+      set(value) {
+        this.goodsList.forEach(v => {
+          v.isStatus = value;
+        });
       }
-  },
+    },
+    // 选中商品的id
+    checkedId() {
+      let ids = "";
+      this.goodsList.forEach(v => {
+        if (v.isStatus) {
+          ids += v.id;
+          ids += ",";
+        }
+      });
+      ids = ids.slice(0, -1);
+      // console.log( ids );
+      return ids;
+    }
+  }
 };
 </script>
 <style lang="scss">

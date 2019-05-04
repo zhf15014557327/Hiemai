@@ -40,8 +40,7 @@
                             <router-link to="/vipCenter/vipOrderList">
                               <i class="iconfont icon-arrow-right"></i>交易订单
                             </router-link>
-                            <!-- <a href="#/site/member/orderlist" class=""> -->
-                            <!-- </a> -->
+                         
                           </p>
                         </div>
                       </li>
