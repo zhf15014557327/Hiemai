@@ -169,7 +169,7 @@ router.beforeEach((to, from, next) => {
     // 查看是否登录
     // 通过路由元信息判断是否检查登录状态
     if(to.meta.checkLogin == true){
-    Vue.prototype.$axios.get('site/account/islogin').then(res=>{
+      Vue.prototype.$axios.get('site/account/islogin').then(res=>{
             // console.log( res );
         if(res.data.code === "logined"){
         

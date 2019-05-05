@@ -2,7 +2,7 @@
 import Vue from 'vue'
 // 导入饿了吗ui插件
 // import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import 'element-ui/lib/theme-chalk/index.css';
 
 // Vue.use(ElementUI);
 // 饿了吗插件按需引入
@@ -36,7 +36,7 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$notify = Notification;
 
 // 导入iview插件
-import 'iview/dist/styles/iview.css';
+// import 'iview/dist/styles/iview.css';
 // 按需引入
 import { BackTop, Affix } from 'iview';
 // 注册
