@@ -154,7 +154,7 @@ export default {
     this.$axios
       .get(`site/validate/order/getorderdetial/${this.orderid}`)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         // 商品列表
         this.goodslist = res.data.message.goodslist;
         // 订单详情
