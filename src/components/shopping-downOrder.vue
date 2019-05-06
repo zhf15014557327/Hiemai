@@ -406,7 +406,7 @@ export default {
 
     });
   },
-  computed: {}
+
 };
 </script>
 <style lang="scss">

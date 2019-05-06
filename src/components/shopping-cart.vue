@@ -92,10 +92,10 @@
                     <p>{{item.title}}</p>
                   </td>
                   <td width="84" align="center">¥{{item.sell_price}}</td>
-                  <td width="104" align="center">x{{item.buycount}}</td>
+                  <td width="104" align="center"><el-input-number size="mini" v-model="item.buycount"></el-input-number></td>
                   <td width="104" align="center">¥{{item.sell_price*item.buycount}}</td>
-                  <td width="200" align="center">
-                    <el-input-number size="mini" v-model="item.buycount"></el-input-number>
+                  <td width="100" align="center">
+                    
                     <el-button type="danger" icon="el-icon-delete" circle @click="dlt(index)"></el-button>
                   </td>
                 </tr>
